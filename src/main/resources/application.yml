@@ -5,7 +5,7 @@ spring:
         registration:
           keycloak:
             client-id: login-app
-            client-secret: bQ2QEidNqO4KBaVdlkvKsVGuQna8ihv6
+            client-secret: 
             authorization-grant-type: authorization_code
             scope: openid
         provider:
