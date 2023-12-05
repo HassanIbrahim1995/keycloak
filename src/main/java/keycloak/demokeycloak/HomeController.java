@@ -27,13 +27,13 @@ public class HomeController {
         return "Welcome to the home page!";
     }
 
-    @GetMapping("/userEndpoint")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/user/userEndpoint")
+    @PreAuthorize("hasRole('USER')")
     public String userEndpoint(@AuthenticationPrincipal OidcUser user) {
         return "Welcome to the user endpoint, " + user.getPreferredUsername() + "!";
     }
 
-    @GetMapping("/adminEndpoint")
+    @GetMapping("/admin/adminEndpoint")
     @PreAuthorize("hasRole('ADMIN')")
     public String adminEndpoint(@AuthenticationPrincipal OidcUser user) {
         return "Welcome to the admin endpoint, " + user.getPreferredUsername() + "!";

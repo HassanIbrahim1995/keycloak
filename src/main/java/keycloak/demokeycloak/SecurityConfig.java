@@ -36,17 +36,15 @@ class SecurityConfig {
     @Order(1)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
-                )
+            http
+            .authorizeHttpRequests(authz -> authz
+                    .requestMatchers("/","/authenticate").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/user/**").hasRole("USER")
+                    .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(Customizer.withDefaults())
                 .exceptionHandling(authPoint -> authPoint.authenticationEntryPoint(authenticationEntryPoint()));
         return http.build();
